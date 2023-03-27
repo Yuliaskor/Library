@@ -1,42 +1,31 @@
 package com.example.library.controller;
 
-import com.example.library.exception.BookAlreadyRentedException;
-import com.example.library.exception.BookNotRentedException;
 import com.example.library.services.RentalService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.webjars.NotFoundException;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/rentals")
+@Tag(name = "Rental Controller")
 public class RentalController {
 
     private final RentalService rentalService;
 
     @PostMapping("/{bookId}/{clientId}")
+    @Operation(summary = "Rent book", description = "Rent given book to given client")
     public ResponseEntity<Void> rentBook(@PathVariable Integer bookId, @PathVariable Integer clientId) {
-        try {
-            rentalService.rentBook(bookId, clientId);
-            return ResponseEntity.ok().build();
-        } catch (BookAlreadyRentedException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        } catch (NotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        rentalService.rentBook(bookId, clientId);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("return/{bookId}/{clientId}")
+    @Operation(summary = "Return book", description = "Return given book from given client")
     public ResponseEntity<Void> returnBook(@PathVariable Integer bookId, @PathVariable Integer clientId) {
-        try {
-            rentalService.returnBook(bookId, clientId);
-            return ResponseEntity.ok().build();
-        } catch (BookNotRentedException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }  catch (NotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        rentalService.returnBook(bookId, clientId);
+        return ResponseEntity.ok().build();
     }
 }
