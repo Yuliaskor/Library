@@ -28,7 +28,7 @@ public class RentalController {
         }
     }
 
-    @PutMapping("/{bookId}/{clientId}")
+    @PutMapping("return/{bookId}/{clientId}")
     public ResponseEntity<Void> returnBook(@PathVariable Integer bookId, @PathVariable Integer clientId) {
         try {
             rentalService.returnBook(bookId, clientId);

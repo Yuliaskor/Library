@@ -39,6 +39,7 @@ public class RentalService {
         }
         book.get().setClient(client.get());
         book.get().setBorrowDate(LocalDate.now());
+        bookRepository.deleteById(bookId);
         bookRepository.save(book.get());
     }
 
@@ -59,6 +60,7 @@ public class RentalService {
             throw new NotFoundException("Nie znaleziono clienta z takim id");
         }
         book.get().setClient(null);
+        bookRepository.deleteById(bookId);
         bookRepository.save(book.get());
     }
 }
