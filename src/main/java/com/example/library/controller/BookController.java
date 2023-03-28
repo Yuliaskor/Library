@@ -40,6 +40,12 @@ public class BookController {
         return ResponseEntity.created(location).body(savedBook);
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Get book", description = "Get book by id")
+    public ResponseEntity<BookResponseDto> getBook(@PathVariable int id) {
+        return ResponseEntity.ok(service.getBook(id));
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete book", description = "Delete book by id")

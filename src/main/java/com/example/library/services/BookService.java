@@ -75,4 +75,10 @@ public class BookService {
         }
         return authors;
     }
+
+    public BookResponseDto getBook(int id) {
+        return bookRepository.findById(id)
+                .map(bookConverter::convertToDTO)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+    }
 }

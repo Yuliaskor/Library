@@ -46,4 +46,11 @@ public class AuthorService {
         author.setName(authorRequestDto.getName());
         return authorConverter.convertToDTO(authorRepository.save(author));
     }
+
+    public AuthorResponseDto getAuthor(int id) {
+        return authorRepository.findById(id)
+                .map(authorConverter::convertToDTO)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found"));
+
+    }
 }

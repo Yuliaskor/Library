@@ -54,4 +54,10 @@ public class AuthorController {
         AuthorResponseDto authorResponseDto = service.updateAuthor(id, author);
         return ResponseEntity.ok(authorResponseDto);
     }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Get author", description = "Get author by id")
+    public ResponseEntity<AuthorResponseDto> getAuthor(@PathVariable int id) {
+        return ResponseEntity.ok(service.getAuthor(id));
+    }
 }
