@@ -7,14 +7,20 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BookConverter {
+    private final AuthorConverter authorConverter;
+
+    public BookConverter(AuthorConverter authorConverter) {
+        this.authorConverter = authorConverter;
+    }
+
     public BookResponseDto convertToDTO(Book book) {
         BookResponseDto bookDTO = new BookResponseDto();
         bookDTO.setId(book.getId());
         bookDTO.setTitle(book.getTitle());
-        bookDTO.setAuthors(book.getAuthors());
+        bookDTO.setAuthors(book.getAuthors().stream().map(authorConverter::convertToDTO).toList());
         bookDTO.setPublisher(book.getPublisher());
         bookDTO.setPublicationYear(book.getPublicationYear());
-        bookDTO.setBorrow(book.getClient() != null );
+        bookDTO.setBorrow(book.getClient() != null);
         return bookDTO;
     }
 

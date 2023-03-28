@@ -1,6 +1,5 @@
 package com.example.library.models.dto;
 
-import com.example.library.models.Author;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +21,7 @@ public class BookResponseDto {
     private String title;
 
     @Schema(description = "book's authors")
-    private List<Author> authors;
+    private List<AuthorResponseDto> authors;
 
     @Schema(description = "book's publisher", example = "PWN")
     private String publisher;
