@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -19,8 +21,8 @@ public class BookResponseDto {
     @Schema(description = "book's title", example = "Potop")
     private String title;
 
-    @Schema(description = "book's author")
-    private Author author;
+    @Schema(description = "book's authors")
+    private List<Author> authors;
 
     @Schema(description = "book's publisher", example = "PWN")
     private String publisher;

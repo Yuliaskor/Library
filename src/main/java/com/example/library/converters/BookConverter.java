@@ -11,7 +11,7 @@ public class BookConverter {
         BookResponseDto bookDTO = new BookResponseDto();
         bookDTO.setId(book.getId());
         bookDTO.setTitle(book.getTitle());
-        bookDTO.setAuthor(book.getAuthor());
+        bookDTO.setAuthors(book.getAuthors());
         bookDTO.setPublisher(book.getPublisher());
         bookDTO.setPublicationYear(book.getPublicationYear());
         bookDTO.setBorrow(book.getClient() != null );

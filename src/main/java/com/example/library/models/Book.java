@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Builder
@@ -23,9 +24,8 @@ public class Book {
     @Column(name = "title")
     private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @ManyToMany
+    private List<Author> authors;
 
     @Column(name = "publisher")
     private String publisher;

@@ -24,9 +24,9 @@ public class BookService {
     private final AuthorRepository authorRepository;
     private final BookConverter bookConverter;
 
-    public List<BookResponseDto> getAllBooks(){
+    public List<BookResponseDto> getAllBooks() {
         List<Book> books = bookRepository.findAll();
-        if(books == null || books.isEmpty()){
+        if (books == null || books.isEmpty()) {
             return new ArrayList<>();
         }
         return books
@@ -35,25 +35,44 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    public BookResponseDto addBook(BookRequestDto bookRequestDto){
+    public BookResponseDto addBook(BookRequestDto bookRequestDto) {
         Book book = bookConverter.convertToEntity(bookRequestDto);
+        var authorNames = bookRequestDto.getAuthors();
+        var authors = getOrCreateAuthors(authorNames);
 
-        Author author = authorRepository.findByName(bookRequestDto.getAuthor());
-        if(author == null){
-            Author a = new Author();
-            a.setName(bookRequestDto.getAuthor());
-            authorRepository.save(a);
-            author = authorRepository.findByName(bookRequestDto.getAuthor());
-        }
-        book.setAuthor(author);
+        book.setAuthors(authors);
         bookRepository.save(book);
         return bookConverter.convertToDTO(book);
     }
 
-    public void deleteBook(Integer id){
+    public void deleteBook(Integer id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
 
         bookRepository.delete(book);
+    }
+
+    public BookResponseDto updateBook(int id, BookRequestDto bookRequestDto) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+        book.setTitle(bookRequestDto.getTitle());
+        book.setPublisher(bookRequestDto.getPublisher());
+        book.setPublicationYear(bookRequestDto.getPublicationYear());
+        book.setAuthors(getOrCreateAuthors(bookRequestDto.getAuthors()));
+        return bookConverter.convertToDTO(bookRepository.save(book));
+    }
+
+    private List<Author> getOrCreateAuthors(List<String> authorNames) {
+        var authors = new ArrayList<Author>();
+        for (String authorName: authorNames) {
+            Author author = authorRepository.findByName(authorName);
+            if (author == null) {
+                Author a = new Author();
+                a.setName(authorName);
+                author = authorRepository.save(a);
+            }
+            authors.add(author);
+        }
+        return authors;
     }
 }

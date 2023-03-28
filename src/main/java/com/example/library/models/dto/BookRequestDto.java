@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -17,8 +19,8 @@ public class BookRequestDto {
     @Schema(description = "book's title", example = "Potop")
     private String title;
     @JsonProperty
-    @Schema(description = "book's author", example = "Henryk Sienkiewicz")
-    private String author;
+    @Schema(description = "book's author", example = "[\"Henryk Sienkiewicz\"]")
+    private List<String> authors;
     @JsonProperty
     @Schema(description = "book's publisher", example = "PWN")
     private String publisher;
