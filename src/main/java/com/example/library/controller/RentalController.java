@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/rentals")
 @Tag(name = "Rental Controller")
+@CrossOrigin("http://localhost:3000")
 public class RentalController {
 
     private final RentalService rentalService;

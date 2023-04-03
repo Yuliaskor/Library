@@ -18,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/authors")
 @Tag(name = "Authors Controller")
+@CrossOrigin("http://localhost:3000")
 public class AuthorController {
 
     private final AuthorService service;
