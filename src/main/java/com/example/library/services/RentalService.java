@@ -66,8 +66,11 @@ public class RentalService {
         if (client.isEmpty()){
             throw new NotFoundException("Nie znaleziono clienta z takim id");
         }
+        Book book1 = book.get();
         book.get().setClient(null);
+        List<Author> author = book.get().getAuthors().stream().toList();
         bookRepository.deleteById(bookId);
+        book1.setAuthors(author);
         bookRepository.save(book.get());
     }
 }
